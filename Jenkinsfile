@@ -38,8 +38,8 @@ pipeline
                 {
                     withDockerRegistry([url:"", credentialsId: "dockerhub"])
                     {
-                        sh 'docker tag api beekoan/udacity_capstone'
-                        sh 'docker push beekoan/udacity_capstone'
+                        sh 'docker tag api beekoan/udacity_capstone:v($version)'
+                        sh 'docker push beekoan/udacity_capstone:v($version)'
                     }
                 }
             }
@@ -56,9 +56,17 @@ pipeline
                         sh 'aws eks update-kubeconfig --name capstonebeeko'
                         sh 'kubectl config use-context $(aws eks describe-cluster --name capstonebeeko | jq -r ."cluster"."arn")'
                         sh 'kubectl apply -f cluster.yml'
-                        sh 'kubectl get nodes'                        
                     }
                 }
+            }
+        }
+
+        stage('cleanup')
+        {
+            steps
+            {
+                sh 'docker system prune'
+                sh 'version=$(($version+1))'
             }
         }       
         
