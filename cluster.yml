@@ -22,23 +22,12 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: beekoan/udacity_course4
-        command: [
-          "/bin/bash", 
-          "-c", 
-          "python3 app.py"
-          ]
-        
+        image: beekoan/udacity_capstone
         imagePullPolicy: Always
         ports:
         - name: http
           containerPort: 80
-        livenessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /
-            scheme: HTTP
-            port: 80
+          
 ---
 apiVersion: v1
 kind: Service
@@ -47,7 +36,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: capstonebeeko
+    app: my-app
   ports:
     - name: http
       protocol: TCP
