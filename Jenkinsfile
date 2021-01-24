@@ -38,8 +38,8 @@ pipeline
                 {
                     withDockerRegistry([url:"", credentialsId: "dockerhub"])
                     {
-                        sh 'docker tag api beekoan/udacity_capstone:v($version)'
-                        sh 'docker push beekoan/udacity_capstone:v($version)'
+                        sh 'docker tag api beekoan/udacity_capstone:v$version'
+                        sh 'docker push beekoan/udacity_capstone:v$version'
                     }
                 }
             }
