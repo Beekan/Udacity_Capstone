@@ -11,4 +11,6 @@ eksctl create cluster --name capstonebeeko --region us-west-2 --with-oidc --ssh-
 
 The jenkins server is configured manually.
 
+## Updates
 
+The update strategy is a rolling update. The instances are not changed, rather the pods within these instances do. In the images folder the output of the container changed after a period of time as the update was integrated.
