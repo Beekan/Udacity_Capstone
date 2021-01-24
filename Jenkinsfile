@@ -24,7 +24,7 @@ pipeline
         {
             steps
             {
-                sh './jinja.py'
+                sh 'python3 jinja.py'
             }
         }
 
