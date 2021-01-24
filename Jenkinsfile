@@ -15,8 +15,7 @@ pipeline
         {
             steps
             {
-                sh 'pip3 install -r requirements.txt'
-                sh 'pylint --disable=R,C,W1203 app.py'
+                sh 'hadolint Dockerfile'
             }
         }
 
