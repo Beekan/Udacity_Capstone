@@ -1,33 +1,66 @@
 pipeline
 {
+    environment 
+    {
+        imageName = 'beekoan/udacity_capstone'
+        registryCredential = 'dockerhub'
+    }
     
 
     agent any
     stages
-    {
-        stage('initial slack message')
+    {   
+        
+        stage('linting app.py')
         {
             steps
             {
-                sh 'echo hello world'
+                sh 'pylint --disable=R,C,W1203 app.py'
             }
-        } 
-        stage('Deployment')
+        }
+
+        stage('Build Docker')
         {
             steps
             {
                 script
                 {
-                    withAWS(credentials: 'AWScred', region: 'us-west-2')
+                    sh 'docker build --tag=api .'
+                }
+            }
+        }
+
+        stage('Push Docker')
+        {
+            steps
+            {
+                script
+                {
+                    withDockerRegistry([url:"", credentialsId: "dockerhub"])
                     {
-                        sh 'aws s3 ls'
-                        
-                        
-                        
+                        sh 'docker tag api beekoan/udacity_capstone'
+                        sh 'docker push beekoan/udacity_capstone'
                     }
                 }
             }
-        }       
+        }
+
+        // stage('Deployment')
+        // {
+        //     steps
+        //     {
+        //         script
+        //         {
+        //             withAWS(credentials: 'AWScred', region: 'us-west-2')
+        //             {
+        //                 sh 'aws eks update-kubeconfig --name capstonebeeko'
+        //                 sh 'kubectl config use-context $(aws eks describe-cluster --name capstonebeeko | jq -r ."cluster"."arn")'
+        //                 sh 'kubectl apply -f cluster.yml'
+        //                 sh 'kubectl get nodes'                        
+        //             }
+        //         }
+        //     }
+        // }       
         
     }
 }
