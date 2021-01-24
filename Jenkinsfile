@@ -19,6 +19,15 @@ pipeline
             }
         }
 
+
+        stage('Run jinja')
+        {
+            steps
+            {
+                sh './jinja.py'
+            }
+        }
+
         stage('Build Docker')
         {
             steps
@@ -38,8 +47,8 @@ pipeline
                 {
                     withDockerRegistry([url:"", credentialsId: "dockerhub"])
                     {
-                        sh 'docker tag api beekoan/udacity_capstone:v$version'
-                        sh 'docker push beekoan/udacity_capstone:v$version'
+                        sh 'docker tag api beekoan/udacity_capstone:$(cat version)'
+                        sh 'docker push beekoan/udacity_capstone$(cat version)'
                     }
                 }
             }
@@ -66,7 +75,6 @@ pipeline
             steps
             {
                 sh 'docker system prune'
-                sh 'version=$(($version+1))'
             }
         }       
         
