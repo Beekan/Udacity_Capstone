@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: beekoan/udacity_capstone:v($version)
+        image: beekoan/udacity_capstone:v$version
         imagePullPolicy: Always
         ports:
         - name: http
