@@ -74,7 +74,7 @@ pipeline
         {
             steps
             {
-                sh 'docker system prune'
+                sh 'docker system prune -f'
             }
         }       
         

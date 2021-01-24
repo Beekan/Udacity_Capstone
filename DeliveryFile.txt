@@ -1,0 +1,3 @@
+github: https://github.com/Beekan/Udacity_Capstone
+jenkins: http://54.148.39.88:8080/
+LoadBalancer: aa8dc51f157754cf8b0f064440d1f48c-1796111460.us-west-2.elb.amazonaws.com
